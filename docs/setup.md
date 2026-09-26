@@ -63,6 +63,8 @@ The script scans `.next/static`, not server artifacts. `server-only` imports add
 
 ## Hosting preparation
 
+For Vercel, the committed `vercel.json` selects the Next.js framework and `.next` output directory, overriding dashboard settings such as `dist`. Set `CONTENT_SOURCE=fixtures` for a sample deployment, or configure the Sanity variables above for live content. Set these environment variables for each intended deployment environment before building.
+
 Use a managed Next.js host supporting Node 24, App Router server rendering and the Next.js fetch cache. Configure preview and production environments separately, each with its intended Sanity dataset, source mode, optional read token and `SITE_URL`. `SITE_URL` is the canonical origin used by metadata, sitemap and robots; localhost is only the local default. This is not a static export.
 
 After a deployment is reviewed, connect the domain in the chosen host, apply its DNS instructions, verify HTTPS and canonical URLs, and verify Studio CORS for that origin. Keep the previous successful deployment available for rollback. Roll back by promoting that deployment and its matching environment configuration; back up CMS data separately before editorial migrations. These are prepared instructions, not claims of completed external provisioning or launch.
