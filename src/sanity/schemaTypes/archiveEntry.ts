@@ -1,2 +1,23 @@
-import {defineType,defineField,defineArrayMember} from 'sanity';import {base,requiredString,richText} from './shared';
-export default defineType({name:'archiveEntry',type:'document',fields:[...base,requiredString('category'),richText('body'),defineField({name:'related',type:'array',of:[defineArrayMember({type:'reference',to:['artist','event','session','release','archiveEntry'].map(type=>({type}))})]})]});
+import { defineType, defineField, defineArrayMember } from "sanity";
+import { base, requiredString, richText } from "./shared";
+export default defineType({
+  name: "archiveEntry",
+  type: "document",
+  fields: [
+    ...base,
+    requiredString("category"),
+    richText("body"),
+    defineField({
+      name: "related",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "reference",
+          to: ["artist", "event", "session", "release", "archiveEntry"].map(
+            (type) => ({ type }),
+          ),
+        }),
+      ],
+    }),
+  ],
+});

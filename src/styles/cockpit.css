@@ -1,1 +1,121 @@
-.cockpit-stage{position:relative}.room-layer{position:absolute;inset:0}.semantic-layer{position:relative}.room-active .cockpit-stage{aspect-ratio:1600/810;width:100%;isolation:isolate}.room-active .semantic-layer{position:absolute;inset:0;pointer-events:none}.room-active .semantic-layer>*{pointer-events:auto}.room-active .catalogue{display:contents}.room-active .screen{position:absolute;pointer-events:auto;background:#070407ed;border:1px solid #32101f;overflow:auto;scrollbar-width:thin;scrollbar-color:#723452 #090509;padding:clamp(.8rem,1.4vw,1.4rem)}.room-active .browse{left:2.6%;top:25%;width:22.2%;height:54%;transform:perspective(1200px) rotateY(9deg);transform-origin:right center}.room-active .detail{left:28%;top:26%;width:44%;height:53%;min-height:0}.room-active .context{right:2.6%;top:25%;width:22.2%;height:54%;transform:perspective(1200px) rotateY(-9deg);transform-origin:left center}.room-active .screen h1{font-size:clamp(1.3rem,2vw,2.4rem)}.room-active .screen h2{font-size:1rem}.room-active .screen h3{margin-top:1rem}.room-active .artwork-placeholder{min-height:90px;margin:1rem 0}.room-active .artwork-placeholder span{font-size:2rem}.room-active .browse input,.room-active .browse select,.room-active .browse button{padding:.4rem}.room-active .browse form{gap:.4rem}.room-active .browse label,.room-active .browse a,.room-active .context{font-size:clamp(.7rem,.9vw,.9rem)}.room-active .standalone{left:28%;top:26%;width:44%;height:53%;min-height:0;margin:0}.cockpit-shell nav{justify-content:center}.room-active .result-list li{margin-bottom:.5rem}.room-active .screen .eyebrow{margin-top:0}.room-active .browse-back{font-size:.75rem;margin-bottom:.4rem}.room-active .context>p{margin:.6rem 0}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+.cockpit-stage {
+  position: relative;
+}
+.room-layer {
+  position: absolute;
+  inset: 0;
+}
+.semantic-layer {
+  position: relative;
+}
+.room-active .cockpit-stage {
+  aspect-ratio: 1600/810;
+  width: 100%;
+  isolation: isolate;
+}
+.room-active .semantic-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.room-active .semantic-layer > * {
+  pointer-events: auto;
+}
+.room-active .catalogue {
+  display: contents;
+}
+.room-active .screen {
+  position: absolute;
+  pointer-events: auto;
+  background: #070407ed;
+  border: 1px solid #32101f;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #723452 #090509;
+  padding: clamp(0.8rem, 1.4vw, 1.4rem);
+}
+.room-active .browse {
+  left: 2.6%;
+  top: 25%;
+  width: 22.2%;
+  height: 54%;
+  transform: perspective(1200px) rotateY(9deg);
+  transform-origin: right center;
+}
+.room-active .detail {
+  left: 28%;
+  top: 26%;
+  width: 44%;
+  height: 53%;
+  min-height: 0;
+}
+.room-active .context {
+  right: 2.6%;
+  top: 25%;
+  width: 22.2%;
+  height: 54%;
+  transform: perspective(1200px) rotateY(-9deg);
+  transform-origin: left center;
+}
+.room-active .screen h1 {
+  font-size: clamp(1.3rem, 2vw, 2.4rem);
+}
+.room-active .screen h2 {
+  font-size: 1rem;
+}
+.room-active .screen h3 {
+  margin-top: 1rem;
+}
+.room-active .artwork-placeholder {
+  min-height: 90px;
+  margin: 1rem 0;
+}
+.room-active .artwork-placeholder span {
+  font-size: 2rem;
+}
+.room-active .browse input,
+.room-active .browse select,
+.room-active .browse button {
+  padding: 0.4rem;
+}
+.room-active .browse form {
+  gap: 0.4rem;
+}
+.room-active .browse label,
+.room-active .browse a,
+.room-active .context {
+  font-size: clamp(0.7rem, 0.9vw, 0.9rem);
+}
+.room-active .standalone {
+  left: 28%;
+  top: 26%;
+  width: 44%;
+  height: 53%;
+  min-height: 0;
+  margin: 0;
+}
+.cockpit-shell nav {
+  justify-content: center;
+}
+.room-active .result-list li {
+  margin-bottom: 0.5rem;
+}
+.room-active .screen .eyebrow {
+  margin-top: 0;
+}
+.room-active .browse-back {
+  font-size: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+.room-active .context > p {
+  margin: 0.6rem 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

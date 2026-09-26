@@ -1,1 +1,19 @@
-import artist from './artist';import event from './event';import session from './session';import release from './release';import archiveEntry from './archiveEntry';import siteSettings from './siteSettings';import media from './media';import externalLink,{contactLink} from './externalLink';export const schemaTypes=[artist,event,session,release,archiveEntry,siteSettings,media,externalLink,contactLink];
+import artist from "./artist";
+import event from "./event";
+import session from "./session";
+import release from "./release";
+import archiveEntry from "./archiveEntry";
+import siteSettings from "./siteSettings";
+import media from "./media";
+import externalLink, { contactLink } from "./externalLink";
+export const schemaTypes = [
+  artist,
+  event,
+  session,
+  release,
+  archiveEntry,
+  siteSettings,
+  media,
+  externalLink,
+  contactLink,
+];

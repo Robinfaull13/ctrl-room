@@ -1,2 +1,26 @@
-import Link from 'next/link';import {isFixtureMode} from '@/lib/content/repository';import CockpitShell from '@/features/cockpit/CockpitShell';import '@/styles/cockpit.css';
-export default function SiteLayout({children}:{children:React.ReactNode}){return <><a className="skip-link" href="#main">Skip to content</a><header><Link href="/">CTRL ROOM</Link><span>SOUND / VISION / CULTURE / COMMUNITY</span>{isFixtureMode()&&<strong className="sample-badge">Sample content</strong>}</header><CockpitShell>{children}</CockpitShell><footer>CTRL ROOM / Independent frequencies.</footer></>}
+import Link from "next/link";
+import { isFixtureMode } from "@/lib/content/repository";
+import CockpitShell from "@/features/cockpit/CockpitShell";
+import "@/styles/cockpit.css";
+export default function SiteLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header>
+        <Link href="/">CTRL ROOM</Link>
+        <span>SOUND / VISION / CULTURE / COMMUNITY</span>
+        {isFixtureMode() && (
+          <strong className="sample-badge">Sample content</strong>
+        )}
+      </header>
+      <CockpitShell>{children}</CockpitShell>
+      <footer>CTRL ROOM / Independent frequencies.</footer>
+    </>
+  );
+}

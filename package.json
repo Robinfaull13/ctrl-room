@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
     "test:unit": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "check:secrets": "node scripts/check-client-secrets.mjs",
+    "format": "prettier --write src tests *.ts *.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "9.8.1",
@@ -32,8 +34,22 @@
     "@types/three": "0.186.0",
     "eslint": "9.39.5",
     "eslint-config-next": "16.3.6",
+    "groq-js": "2.0.0",
+    "prettier": "3.9.9",
     "typescript": "6.0.3",
     "vitest": "5.0.2"
   },
-  "type": "module"
+  "type": "module",
+  "overrides": {
+    "@module-federation/dts-plugin": {
+      "adm-zip": "0.6.1"
+    },
+    "@vercel/frameworks": {
+      "js-yaml": "3.15.2",
+      "smol-toml": "1.9.0"
+    },
+    "typeid-js": {
+      "uuid": "11.1.1"
+    }
+  }
 }

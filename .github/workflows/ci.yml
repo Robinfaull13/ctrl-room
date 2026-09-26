@@ -1,0 +1,36 @@
+name: Site checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      CONTENT_SOURCE: fixtures
+      SITE_URL: http://localhost:3100
+      E2E_PRODUCTION: '1'
+      SANITY_READ_TOKEN: ctrl-room-synthetic-build-token-not-a-credential
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run test:unit
+      - run: npm run build
+      - run: npm run check:secrets
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

@@ -1,1 +1,31 @@
-import Link from 'next/link';import {sections,labels} from '@/lib/navigation';export default function Home(){return <div className="catalogue"><aside className="screen browse" aria-label="Browse"><h2>Directory</h2><p>Six channels. One room.</p></aside><main className="screen detail" id="main"><p className="eyebrow">Connection established</p><h1>CTRL ROOM</h1><p>Sound. Vision. Culture. Community.</p><p>Enter a channel to explore events, sessions, releases and the archive.</p><div className="home-links">{sections.map(s=><Link key={s} href={'/'+s}>{labels[s]} &rarr;</Link>)}</div></main><aside className="screen context" aria-label="Context"><h2>On frequency</h2><p>A shared space for independent culture.</p></aside></div>}
+import Link from "next/link";
+import { sections, labels } from "@/lib/navigation";
+export default function Home() {
+  return (
+    <div className="catalogue">
+      <aside className="screen browse" aria-label="Browse">
+        <h2>Directory</h2>
+        <p>Six channels. One room.</p>
+      </aside>
+      <main className="screen detail" id="main">
+        <p className="eyebrow">Connection established</p>
+        <h1>CTRL ROOM</h1>
+        <p>Sound. Vision. Culture. Community.</p>
+        <p>
+          Enter a channel to explore events, sessions, releases and the archive.
+        </p>
+        <div className="home-links">
+          {sections.map((s) => (
+            <Link key={s} href={"/" + s}>
+              {labels[s]} &rarr;
+            </Link>
+          ))}
+        </div>
+      </main>
+      <aside className="screen context" aria-label="Context">
+        <h2>On frequency</h2>
+        <p>A shared space for independent culture.</p>
+      </aside>
+    </div>
+  );
+}

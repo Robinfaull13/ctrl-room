@@ -1,14 +1,140 @@
-import {test,expect} from '@playwright/test';
-test.use({viewport:{width:1440,height:900}});
-test('persistent scene follows rapid navigation and then idles',async({page})=>{
- await page.addInitScript(()=>{const proto=WebGL2RenderingContext.prototype;const original=proto.drawElements;proto.drawElements=function(...args){document.documentElement.dataset.drawCalls=String(Number(document.documentElement.dataset.drawCalls||0)+1);return Reflect.apply(original,this,args)}});await page.goto('/studios');await expect(page.locator('[data-scene-ready]')).toHaveCount(1,{timeout:30000});const canvas=await page.locator('.room-layer canvas').elementHandle();
- for(const name of ['01 / Invites','03 / Records','02 / Studios'])await page.getByRole('navigation',{name:'Directory'}).getByRole('link',{name}).click();
- await expect(page).toHaveURL(/\/studios$/);await expect(page.locator('[data-ring-section]')).toHaveAttribute('data-ring-section','studios');await expect(page.getByRole('main')).toHaveCount(1);await expect(page.getByRole('searchbox')).toHaveCount(1);expect(await canvas?.evaluate(el=>el===document.querySelector('.room-layer canvas'))).toBe(true);
- await expect(page.locator('[data-motion]')).toHaveAttribute('data-motion','idle');
- await expect(page.getByRole('status')).toHaveCount(0);const draws=await page.locator('html').getAttribute('data-draw-calls');await page.waitForTimeout(300);expect(await page.locator('html').getAttribute('data-draw-calls')).toBe(draws);await page.screenshot({path:'test-results/desktop-cockpit.png',fullPage:true});
+import { test, expect } from "@playwright/test";
+test.use({ viewport: { width: 1440, height: 900 } });
+test("persistent scene follows rapid navigation and then idles", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const proto = WebGL2RenderingContext.prototype;
+    const original = proto.drawElements;
+    proto.drawElements = function (...args) {
+      document.documentElement.dataset.drawCalls = String(
+        Number(document.documentElement.dataset.drawCalls || 0) + 1,
+      );
+      return Reflect.apply(original, this, args);
+    };
+  });
+  await page.goto("/studios");
+  await expect(page.locator("[data-scene-ready]")).toHaveCount(1, {
+    timeout: 30000,
+  });
+  const canvas = await page.locator(".room-layer canvas").elementHandle();
+  for (const name of ["01 / Invites", "03 / Records", "02 / Studios"])
+    await page
+      .getByRole("navigation", { name: "Directory" })
+      .getByRole("link", { name })
+      .click();
+  await expect(page).toHaveURL(/\/studios$/);
+  await expect(page.locator("[data-ring-section]")).toHaveAttribute(
+    "data-ring-section",
+    "studios",
+  );
+  await expect(page.getByRole("main")).toHaveCount(1);
+  await expect(page.getByRole("searchbox")).toHaveCount(1);
+  expect(
+    await canvas?.evaluate(
+      (el) => el === document.querySelector(".room-layer canvas"),
+    ),
+  ).toBe(true);
+  await expect(page.locator("[data-motion]")).toHaveAttribute(
+    "data-motion",
+    "idle",
+  );
+  await expect(page.getByRole("status")).toHaveCount(0);
+  const draws = await page.locator("html").getAttribute("data-draw-calls");
+  await page.waitForTimeout(300);
+  expect(await page.locator("html").getAttribute("data-draw-calls")).toBe(
+    draws,
+  );
+  await page.screenshot({
+    path: "test-results/desktop-cockpit.png",
+    fullPage: true,
+  });
 });
-test('resize preserves route, search, and a single control set',async({page})=>{await page.goto('/studios/jaide?q=JAIDE');await expect(page.locator('[data-scene-ready]')).toHaveCount(1,{timeout:30000});await page.setViewportSize({width:390,height:844});await expect(page.locator('.room-layer canvas')).toHaveCount(0);await expect(page.getByRole('searchbox')).toHaveValue('JAIDE');await expect(page.getByRole('main')).toHaveCount(1);await page.screenshot({path:'test-results/mobile-cockpit.png',fullPage:true});await page.setViewportSize({width:1440,height:900});await expect(page.locator('[data-scene-ready]')).toHaveCount(1);await expect(page).toHaveURL(/jaide\?q=JAIDE$/);await expect(page.getByRole('searchbox')).toHaveCount(1);});
-test('WebGL failure leaves semantic controls operable',async({page})=>{await page.addInitScript(()=>{const original=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(this:HTMLCanvasElement,type:string,...args:unknown[]){if(type.includes('webgl'))return null;return Reflect.apply(original,this,[type,...args]);} as typeof original;});await page.goto('/studios');await expect(page.getByRole('searchbox')).toBeVisible();await page.getByRole('link',{name:'JAIDE',exact:true}).click();await expect(page.getByRole('heading',{name:'JAIDE',exact:true})).toBeVisible();await expect(page.locator('.room-layer canvas')).toHaveCount(0);});
-test('context loss falls back without losing URL or content',async({page})=>{await page.goto('/studios/jaide?q=JAIDE');await expect(page.locator('[data-scene-ready]')).toHaveCount(1,{timeout:30000});await page.locator('.room-layer canvas').evaluate(canvas=>canvas.dispatchEvent(new Event('webglcontextlost',{cancelable:true})));await expect(page.locator('.room-layer canvas')).toHaveCount(0);await expect(page.getByRole('heading',{name:'JAIDE',exact:true})).toBeVisible();await expect(page.getByRole('searchbox')).toHaveValue('JAIDE');await expect(page).toHaveURL(/jaide\?q=JAIDE$/);});
-test('reduced motion skips travel',async({page})=>{await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/studios');await expect(page.locator('[data-scene-ready]')).toHaveCount(1,{timeout:30000});await page.getByRole('navigation',{name:'Directory'}).getByRole('link',{name:'03 / Records'}).click();await expect(page.locator('[data-ring-section]')).toHaveAttribute('data-ring-section','records');await expect(page.locator('[data-motion]')).toHaveAttribute('data-motion','idle');});
-test('mobile never mounts the room',async({page})=>{await page.setViewportSize({width:390,height:844});await page.goto('/studios/jaide');await expect(page.getByRole('heading',{name:'JAIDE',exact:true})).toBeVisible();await expect(page.locator('.room-layer')).toHaveCount(0);await page.getByRole('link',{name:'Browse Studios'}).click();await expect(page.getByRole('searchbox')).toBeVisible();});
+test("resize preserves route, search, and a single control set", async ({
+  page,
+}) => {
+  await page.goto("/studios/jaide?q=JAIDE");
+  await expect(page.locator("[data-scene-ready]")).toHaveCount(1, {
+    timeout: 30000,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator(".room-layer canvas")).toHaveCount(0);
+  await expect(page.getByRole("searchbox")).toHaveValue("JAIDE");
+  await expect(page.getByRole("main")).toHaveCount(1);
+  await page.screenshot({
+    path: "test-results/mobile-cockpit.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(page.locator("[data-scene-ready]")).toHaveCount(1);
+  await expect(page).toHaveURL(/jaide\?q=JAIDE$/);
+  await expect(page.getByRole("searchbox")).toHaveCount(1);
+});
+test("WebGL failure leaves semantic controls operable", async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (
+      this: HTMLCanvasElement,
+      type: string,
+      ...args: unknown[]
+    ) {
+      if (type.includes("webgl")) return null;
+      return Reflect.apply(original, this, [type, ...args]);
+    } as typeof original;
+  });
+  await page.goto("/studios");
+  await expect(page.getByRole("searchbox")).toBeVisible();
+  await page.getByRole("link", { name: "JAIDE", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "JAIDE", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".room-layer canvas")).toHaveCount(0);
+});
+test("context loss falls back without losing URL or content", async ({
+  page,
+}) => {
+  await page.goto("/studios/jaide?q=JAIDE");
+  await expect(page.locator("[data-scene-ready]")).toHaveCount(1, {
+    timeout: 30000,
+  });
+  await page
+    .locator(".room-layer canvas")
+    .evaluate((canvas) =>
+      canvas.dispatchEvent(new Event("webglcontextlost", { cancelable: true })),
+    );
+  await expect(page.locator(".room-layer canvas")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "JAIDE", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole("searchbox")).toHaveValue("JAIDE");
+  await expect(page).toHaveURL(/jaide\?q=JAIDE$/);
+});
+test("reduced motion skips travel", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/studios");
+  await expect(page.locator("[data-scene-ready]")).toHaveCount(1, {
+    timeout: 30000,
+  });
+  await page
+    .getByRole("navigation", { name: "Directory" })
+    .getByRole("link", { name: "03 / Records" })
+    .click();
+  await expect(page.locator("[data-ring-section]")).toHaveAttribute(
+    "data-ring-section",
+    "records",
+  );
+  await expect(page.locator("[data-motion]")).toHaveAttribute(
+    "data-motion",
+    "idle",
+  );
+});
+test("mobile never mounts the room", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/studios/jaide");
+  await expect(
+    page.getByRole("heading", { name: "JAIDE", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".room-layer")).toHaveCount(0);
+  await page.getByRole("link", { name: "Browse Studios" }).click();
+  await expect(page.getByRole("searchbox")).toBeVisible();
+});

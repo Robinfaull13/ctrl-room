@@ -1,2 +1,26 @@
-import { defineConfig } from '@playwright/test';
-export default defineConfig({testDir:'./tests/e2e',fullyParallel:false,workers:1,timeout:45000,use:{channel:process.env.PLAYWRIGHT_CHANNEL || undefined,baseURL:'http://localhost:3100',trace:'retain-on-failure',screenshot:'only-on-failure'},webServer:{command:process.env.E2E_PRODUCTION ? 'npm run start -- --port 3100' : 'npm run dev -- --port 3100',url:'http://localhost:3100',reuseExistingServer:false,timeout:120000,env:{CONTENT_SOURCE:'fixtures',NEXT_PUBLIC_SANITY_PROJECT_ID:'',NEXT_PUBLIC_SANITY_DATASET:''}}});
+import { defineConfig } from "@playwright/test";
+export default defineConfig({
+  testDir: "./tests/e2e",
+  fullyParallel: false,
+  workers: 1,
+  timeout: 45000,
+  use: {
+    channel: process.env.PLAYWRIGHT_CHANNEL || undefined,
+    baseURL: "http://localhost:3100",
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
+  },
+  webServer: {
+    command: process.env.E2E_PRODUCTION
+      ? "npm run start -- --port 3100"
+      : "npm run dev -- --port 3100",
+    url: "http://localhost:3100",
+    reuseExistingServer: false,
+    timeout: 120000,
+    env: {
+      CONTENT_SOURCE: "fixtures",
+      NEXT_PUBLIC_SANITY_PROJECT_ID: "",
+      NEXT_PUBLIC_SANITY_DATASET: "",
+    },
+  },
+});
