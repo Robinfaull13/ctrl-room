@@ -45,7 +45,12 @@ test("persistent scene follows rapid navigation and then idles", async ({
   expect(await page.locator("html").getAttribute("data-draw-calls")).toBe(
     draws,
   );
+  await expect(
+    page.getByRole("heading", { name: "Studios", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole("searchbox")).toBeVisible();
   await page.screenshot({
+    animations: "disabled",
     path: "test-results/desktop-cockpit.png",
     fullPage: true,
   });
@@ -136,5 +141,26 @@ test("mobile never mounts the room", async ({ page }) => {
   ).toBeVisible();
   await expect(page.locator(".room-layer")).toHaveCount(0);
   await page.getByRole("link", { name: "Browse Studios" }).click();
+  await expect(page.getByRole("searchbox")).toBeVisible();
+});
+
+test("search submission preserves the scene and visible controls", async ({
+  page,
+}) => {
+  await page.goto("/studios");
+  await expect(page.locator("[data-scene-ready]")).toHaveCount(1);
+  await page
+    .locator(".room-layer canvas")
+    .evaluate((el) => el.setAttribute("data-identity-probe", "retained"));
+  await page.getByRole("searchbox").fill("JAIDE");
+  await page.getByRole("button", { name: "Search", exact: true }).click();
+  await expect(page).toHaveURL(/q=JAIDE/);
+  await expect(page.locator(".room-layer canvas")).toHaveAttribute(
+    "data-identity-probe",
+    "retained",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Studios", exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole("searchbox")).toBeVisible();
 });

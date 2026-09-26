@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Form from "next/form";
 import { labels } from "@/lib/navigation";
 import type { Section } from "@/lib/content/types";
 export default function BrowseControls({
@@ -11,7 +12,7 @@ export default function BrowseControls({
   format?: "DJ set" | "Live";
 }) {
   return (
-    <form action={"/" + section} method="get" role="search">
+    <Form action={"/" + section} role="search">
       <label htmlFor="catalogue-search">Search {labels[section]}</label>
       <input
         key={q}
@@ -38,6 +39,6 @@ export default function BrowseControls({
       )}
       <button type="submit">Search</button>
       <Link href={"/" + section}>Reset filters</Link>
-    </form>
+    </Form>
   );
 }

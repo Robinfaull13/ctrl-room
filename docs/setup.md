@@ -10,6 +10,7 @@ Install Node 24, then run `npm ci`. Exact direct versions and dependency resolut
 - `npm run test:unit`: validation, repository, GROQ, URL and motion contracts.
 - `npm run build` and `npm run start`: production build/server.
 - `npm run test:e2e`: managed test server on port 3100, explicitly using fixtures.
+- `npm run test:e2e:live`: production server on port 3102 with a process-local fake Sanity HTTP transport; verifies outage recovery and published metadata without remote credentials. Build first.
 - `npm run format`: format application code and tests.
 
 Install the browser with `npx playwright install chromium`. Set `E2E_PRODUCTION=1` for the final browser journey against an existing production build. Set `PLAYWRIGHT_CHANNEL=chrome` only when using installed Chrome locally; this was needed during implementation because the managed browser download timed out. CI uses managed Chromium.
@@ -54,6 +55,7 @@ npm run build
 npm run check:secrets
 $env:E2E_PRODUCTION='1'
 npm run test:e2e
+npm run test:e2e:live
 Remove-Item Env:SANITY_READ_TOKEN
 ```
 

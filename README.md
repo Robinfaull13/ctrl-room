@@ -23,6 +23,7 @@ npm run test:unit
 npm run build
 npx playwright install chromium
 npm run test:e2e
+npm run test:e2e:live
 ```
 
 Playwright starts its own application on port 3100 with fixture mode. Set `E2E_PRODUCTION=1` to test `npm run start` after building. For local environments unable to download Chromium, set `PLAYWRIGHT_CHANNEL=chrome` to use installed Chrome. CI installs managed Chromium.

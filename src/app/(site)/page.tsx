@@ -1,3 +1,5 @@
+import { siteMetadata } from "@/lib/content/metadata";
+export const generateMetadata = () => siteMetadata();
 import Link from "next/link";
 import { sections, labels } from "@/lib/navigation";
 export default function Home() {

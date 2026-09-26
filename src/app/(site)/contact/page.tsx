@@ -1,8 +1,6 @@
+import { siteMetadata } from "@/lib/content/metadata";
 import { getContentRepository } from "@/lib/content/repository";
-export const metadata = {
-  title: "Contact",
-  alternates: { canonical: "/contact" },
-};
+export const generateMetadata = () => siteMetadata("Contact", "/contact");
 export default async function Contact() {
   const settings = await getContentRepository().settings();
   return (

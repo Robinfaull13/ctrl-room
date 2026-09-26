@@ -3,6 +3,7 @@ import type { ContentKind, Section } from "@/lib/content/types";
 import { getContentRepository } from "@/lib/content/repository";
 import { parseBrowseQuery, labels, contentHref } from "@/lib/navigation";
 import CatalogueView from "./CatalogueView";
+import { siteMetadata } from "@/lib/content/metadata";
 export type SearchParams = Promise<
   Record<string, string | string[] | undefined>
 >;
@@ -53,8 +54,8 @@ export async function routeMetadata(section: Section, slug?: string) {
     ? await getContentRepository().get(kinds[section]!, slug)
     : null;
   if (slug && !item) notFound();
-  return {
-    title: item?.title || labels[section],
-    alternates: { canonical: item ? contentHref(item) : "/" + section },
-  };
+  return siteMetadata(
+    item?.title || labels[section],
+    item ? contentHref(item) : "/" + section,
+  );
 }

@@ -21,6 +21,7 @@ export function youtubeId(value: unknown): true | string {
     : "Use the 11-character YouTube ID";
 }
 export function imageAccessibility(value: unknown): true | string {
+  if (value === undefined || value === null) return true;
   const image = value as { alt?: string; decorative?: boolean } | undefined;
   return image?.decorative === true || !!image?.alt?.trim()
     ? true

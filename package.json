@@ -14,7 +14,8 @@
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
     "check:secrets": "node scripts/check-client-secrets.mjs",
-    "format": "prettier --write src tests *.ts *.mjs"
+    "format": "prettier --write src tests *.ts *.mjs",
+    "test:e2e:live": "playwright test --config playwright.live.config.ts"
   },
   "dependencies": {
     "@react-three/fiber": "9.8.1",

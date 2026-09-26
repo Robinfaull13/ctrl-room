@@ -10,7 +10,7 @@
 
 **Spec:** `docs/superpowers/specs/2026-09-26-site-foundation-design.md`
 
-**Status:** Implemented on feat/site-foundation; final delivery verification and independent review in progress.
+**Status:** Complete on feat/site-foundation. Independent review findings fixed; 21 unit tests and 18 production browser journeys pass.
 
 ## Global Constraints
 
@@ -138,7 +138,7 @@ Editorial documents may use Portable Text; the initial public `body`, `biography
 - [x] Write setup instructions for clean install, fixture/live selection, Sanity project/dataset identifiers, editor access/CORS, optional server-only token, and separate development/production datasets. Explain the 60-second publishing cache, excluded preview workflow and CMS setup notice.
 - [x] Document managed Next.js hosting requirements, environment separation, `SITE_URL`, domain connection and rollback via previous deployment. Clearly distinguish prepared repository configuration from external projects that have actually been provisioned. Do not create a paid project, publish fixtures or claim a live deployment.
 - [x] Run a clean dependency install, lint, typecheck, unit tests, production build and the full browser suite. Review missing-configuration/service-failure tests and mobile/WebGL screenshots. Fix regressions within scope; record any external provisioning limitation explicitly.
-- [ ] Update README from brief-only status to actual installed commands and capabilities. Commit `chore: add delivery checks and setup guide`. Request final code review using the chosen execution workflow; resolve material findings and rerun affected checks before reporting completion.
+- [x] Update README from brief-only status to actual installed commands and capabilities. Commit `chore: add delivery checks and setup guide`. Request final code review using the chosen execution workflow; resolve material findings and rerun affected checks before reporting completion.
 
 ## Plan self-review
 

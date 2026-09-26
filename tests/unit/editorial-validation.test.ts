@@ -25,3 +25,9 @@ describe("editorial safety", () => {
     expect(imageAccessibility({ decorative: true })).toBe(true);
   });
 });
+
+it("allows an omitted optional artist image but validates supplied images", () => {
+  expect(imageAccessibility(undefined)).toBe(true);
+  expect(imageAccessibility(null)).toBe(true);
+  expect(imageAccessibility({})).not.toBe(true);
+});
