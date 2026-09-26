@@ -1,0 +1,1 @@
+import Link from 'next/link';export default function NotFound(){return <main id="main"><h1>Transmission not found</h1><p>This content may have moved or is no longer published.</p><Link href="/archive">Browse archive</Link></main>}
